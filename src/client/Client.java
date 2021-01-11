@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import impls.Adapter;
 import impls.LogFileOperate;
+import interfaces.LogDbOperateApi;
 import interfaces.LogFileOperateApi;
 import loggers.LogModel;
 
@@ -23,12 +25,14 @@ public class Client {
 		List<LogModel> list = new ArrayList<LogModel>();
 		list.add(lml);
 		// 建立操作紀錄檔的物件
-		LogFileOperateApi api = new LogFileOperate("");
+		LogFileOperateApi logFileApi = new LogFileOperate("");
+		LogDbOperateApi api = new Adapter(logFileApi);
 		// 儲存紀錄檔
-		api.writeLogFile(list);
-		
+//		api.writeLogFile(list);
+		api.createLog(lml);
 		// 讀取記憶檔內容
-		List<LogModel> readLog = api.readLogFile();
+//		List<LogModel> readLog = api.readLogFile();
+		List<LogModel> readLog = api.getAllLog();
 		System.out.println("readLog="+readLog);
 	}
 
